@@ -1,6 +1,6 @@
 # HoneyBadger v2
 
-HoneyBadger is a framework for targeted geolocation. While honeypots are traditionally used to passively detect malicious actors, HoneyBadger is an Active Defense tool to determine who the malicious actor is and where they are located. HoneyBadger leverages "agents" built in various technologies that harvest the requisite information from the target host in order to geolocate them. These agents report back to the HoneyBadger API, where the data is stored and made available in the HoneyBadger user interface.
+HoneyBadger is a framework for targeted geolocation. While honeypots are traditionally used to passively detect malicious actors, HoneyBadger is an Active Defense tool to determine who the malicious actor is and where they are located. HoneyBadger leverages "agents", built in various technologies that harvest the requisite information from the target host in order to geolocate them. These agents report back to the HoneyBadger API, where the data is stored and made available in the HoneyBadger user interface.
 
 An early prototype of HoneyBadger (v1) can be seen in the presentation "[Hide and Seek: Post-Exploitation Style](http://youtu.be/VJTrRMqHU5U)" from ShmooCon 2013. The associated Metasploit Framework modules mentioned in the above presentation can be found [here](https://github.com/v10l3nt/metasploit-framework/tree/master/modules/auxiliary/badger). Note: These modules have not been updated to work with v2 of the API.
 
