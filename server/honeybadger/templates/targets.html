@@ -15,7 +15,7 @@
         <div class="u-full-width center-content targets">
         <script>
             function copy_macro(target_guid) {
-                alert("The macro should be copied to the clipboard.\n\nIf not, try clicking the macro button again or simply copy and paste this into your document:\n\n" + document.getElementById(target_guid).innerText);
+                alert("The macro should be copied to the clipboard.\n\nIf not, simply copy and paste this into your document:\n\n" + document.getElementById(target_guid).innerText);
                 copyText = document.getElementById(target_guid).textContent;
                 textArea = document.createElement('textarea');
                 textArea.setAttribute("id", "temptext");
